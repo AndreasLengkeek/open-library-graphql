@@ -199,10 +199,9 @@ These are the constraints your schema and resolvers must enforce. Definitions ar
 2. **Tick the acceptance criteria** in the task file as you verify each one. Don't tick anything you haven't actually run.
 3. **Run the gate.** Every check that exists so far must pass:
    `pnpm typecheck && pnpm test`, plus `pnpm compose` (from 01.3) and `pnpm codegen:check` (from 02.2).
-4. **Add an `## Outcome` section** to the end of the task file, a few lines covering what you built, anything that differed from the spec, and what surprised you. If the design changed, update `docs/design/entity-map.md`, the glossary or an ADR in the same change.
-5. **Review (optional):** run `/code-review` against `main` and point it at the task file as the spec.
-6. **Tick the task in [Milestones](#milestones)** below, in the same commit as the work.
-7. **Commit and merge:** use the message `<id>: <title>` (for example `02.3: catalog subgraph — search and Books`). From 06.3 onwards, open a PR so CI runs before you merge.
+4. **Review (optional):** run `/code-review` against `main` and point it at the task file as the spec.
+5. **Tick the task in [Milestones](#milestones)** below, in the same commit as the work.
+6. **Commit and merge:** use the message `<id>: <title>` (for example `02.3: catalog subgraph — search and Books`). From 06.3 onwards, open a PR so CI runs before you merge.
 
 A milestone is complete when all its tasks are ticked and its headline outcome works from a clean checkout.
 
