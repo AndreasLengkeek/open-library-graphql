@@ -1,0 +1,3 @@
+# Reading Status is a single value per Book, shown as virtual Status Shelves
+
+A User's Reading Status (want to read, reading, read) is stored as one exclusive value per (User, Book) in its own table. The three Status Shelves are derived from that value and never stored as Shelf rows. Custom Shelves are separate, non-exclusive lists. We chose this so that "a Book is in exactly one reading state" is guaranteed by the data model rather than by application code, and so that "Finishing a Book" is simply a status change to read. As a result, Status Shelves can't be renamed or deleted, and adding a Book to a Custom Shelf never changes its Reading Status.

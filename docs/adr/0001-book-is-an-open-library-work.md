@@ -1,0 +1,3 @@
+# A Book is an Open Library Work, not an Edition
+
+The `Book` entity's `@key` is the Open Library Work key, so Shelves, Reading Statuses and Reviews all point to the work rather than to a particular printing. Editions (ISBNs) are only exposed as a list of identifiers on the Book. We chose this because reviews and ratings naturally belong to the work: someone who reads the hardback and someone who reads the paperback should see the same reviews. Open Library's `search.json` can also fetch many Works in one request (`q=key:(/works/A OR /works/B)`), which lets the catalog's reference resolver batch its calls. Switching to editions later would mean re-keying every stored shelf entry and review.
