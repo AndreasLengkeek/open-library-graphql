@@ -95,9 +95,6 @@ type Review {
   user: User!
 }
 
-"""
-A User, owned by users. library contributes their Shelves and Reviews.
-"""
 type User @key(fields: "id") {
   id: ID!
   "The User's three Status Shelves and all of their Custom Shelves."
@@ -106,9 +103,6 @@ type User @key(fields: "id") {
   reviews: [Review!]!
 }
 
-"""
-A Book, owned by catalog. library contributes ratings and Reviews from this app.
-"""
 type Book @key(fields: "id") {
   id: ID!
   "Mean Rating across all Reviews of this Book in this app. Null when it has no Reviews."

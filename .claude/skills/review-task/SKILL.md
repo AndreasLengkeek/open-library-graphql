@@ -34,8 +34,8 @@ Also run the gate from SPEC.md step 3, the checks that exist at this point in th
 - Task file: change `- [ ]` to `- [x]` for each **pass** criterion only.
 - SPEC.md Milestones: tick the task's line only when every criterion in the task file is now `[x]` and the gate is green. A remaining **manual** criterion holds the Milestone open; the user ticks it after confirming.
 
-Edit only checkboxes. The `## Outcome` section is the user's to write, and nothing is committed.
+Edit only checkboxes
 
 ## 5. Report
 
-A table of criteria → verdict → evidence (the command and the line of output that decided it), whether the Milestone was ticked and, if not, what still blocks it. Then list the SPEC.md completion steps still outstanding for this task (`## Outcome`, branch, commit message format).
+A table of criteria → verdict → evidence (the command and the line of output that decided it), whether the Milestone was ticked and, if not, what still blocks it. Then list the SPEC.md completion steps still outstanding for this task (commit message format).
