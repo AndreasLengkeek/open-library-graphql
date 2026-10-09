@@ -1,0 +1,45 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@key"])
+
+type Query {
+  "Search Open Library for Books matching free text, such as a title or an Author's name. Returns at most `first` Books."
+  searchBooks(query: String!, first: Int!): [Book!]!
+  "One Book by its Open Library Work key, such as `OL45804W`. Null when Open Library doesn't know the key."
+  book(id: ID!): Book
+}
+
+"""
+A work as Open Library defines it: the abstract book, whatever the printing.
+Owned by catalog. library contributes `averageRating` and `reviews`.
+"""
+type Book @key(fields: "id") {
+  "Open Library Work key without the `/works/` prefix, such as `OL45804W`."
+  id: ID!
+  title: String!
+  "Open Library's summary of the Book. Null when it has none."
+  description: String
+  "Open Library subject headings, such as `Science fiction`."
+  subjects: [String!]!
+  "ISBNs of the Book's printed editions. Editions themselves aren't modelled."
+  isbns: [String!]!
+  "Year the Book was first published. Null when Open Library doesn't record it."
+  firstPublishYear: Int
+  "URL of a cover image from the Open Library Covers API. Null when the Book has no cover."
+  coverUrl: String
+  "Authors credited as writers of this Book."
+  authors: [Author!]!
+}
+
+"""
+A person credited as a writer of a Book, identified by an Open Library Author key.
+"""
+type Author {
+  "Open Library Author key, such as `OL34184A`."
+  id: ID!
+  name: String!
+  "Biography from Open Library. Null when it has none."
+  bio: String
+  "Birth date as Open Library records it. Free text, such as `1920` or `8 October 1920`, not an ISO date."
+  birthDate: String
+  "Books this Author is credited on."
+  books: [Book]!
+}

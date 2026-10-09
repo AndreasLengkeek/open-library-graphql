@@ -1,0 +1,120 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@key"])
+
+type Mutation {
+  "Set the Viewer's Reading Status for a Book, which moves it between Status Shelves. Pass `status: null` to clear it. Returns the Book, or null when Open Library doesn't know it."
+  setReadingStatus(bookId: ID!, status: ReadingStatus): Book
+
+  "Create a Custom Shelf for the Viewer. Custom Shelf names are unique per User."
+  createShelf(name: String!): CustomShelf!
+  "Rename one of the Viewer's Custom Shelves. Status Shelves can't be renamed."
+  renameShelf(id: ID!, name: String!): CustomShelf!
+  "Delete one of the Viewer's Custom Shelves and its entries. Reading Statuses and Reviews are untouched. Returns the deleted Shelf's id."
+  deleteShelf(id: ID!): ID!
+  "Add a Book to one of the Viewer's Custom Shelves. A Book appears at most once on each Shelf. Status Shelves can't be targeted; use `setReadingStatus`."
+  addToShelf(shelfId: ID!, bookId: ID!): CustomShelf!
+  "Remove a Book from one of the Viewer's Custom Shelves."
+  removeFromShelf(shelfId: ID!, bookId: ID!): CustomShelf!
+
+  "Write the Viewer's Review of a Book. Fails if the Viewer has already reviewed it. Doesn't change the Book's Reading Status."
+  writeReview(bookId: ID!, "Whole number from 1 to 5." rating: Int!, text: String): Review!
+  "Change the Rating or text of one of the Viewer's Reviews. Omitted arguments are left unchanged."
+  updateReview(id: ID!, "Whole number from 1 to 5." rating: Int, text: String): Review!
+  "Delete one of the Viewer's Reviews. Returns the deleted Review's id."
+  deleteReview(id: ID!): ID!
+}
+
+"""
+A named list of Books that belongs to one User: either a Custom Shelf or a
+Status Shelf. Clients tell the kinds apart by `__typename`. Shelves are public.
+"""
+interface Shelf {
+  "A database id for a Custom Shelf. For a Status Shelf it is derived as `status:<userId>:<STATUS>`."
+  id: ID!
+  name: String!
+  "Books on the Shelf, newest addition first. An item is null when Open Library no longer knows the Book."
+  books: [Book]!
+  "The User who owns the Shelf."
+  user: User!
+}
+
+"""
+A Shelf the User creates, names and deletes, such as "Favourites".
+The only kind of Shelf the shelf mutations return.
+"""
+type CustomShelf implements Shelf {
+  "Database ID"
+  id: ID!
+  name: String!
+  "Books on the Shelf, newest addition first. An item is null when Open Library no longer knows the Book."
+  books: [Book]!
+  "The User who owns the Shelf."
+  user: User!
+}
+
+"""
+One of the three fixed Shelves every User has: "Want to read", "Reading" and
+"Read". It shows the Books whose Reading Status matches. It can't be renamed,
+deleted or edited directly; it changes only through `setReadingStatus`.
+"""
+type StatusShelf implements Shelf {
+  "Derived as `status:<userId>:<STATUS>`."
+  id: ID!
+  "Set by its Reading Status"
+  name: String!
+  "Books on the Shelf, newest addition first. An item is null when Open Library no longer knows the Book."
+  books: [Book]!
+  "The User who owns the Shelf."
+  user: User!
+  "The Reading Status whose Books this Shelf shows."
+  readingStatus: ReadingStatus!
+}
+
+"""
+Where a User is with a Book. A User has at most one Reading Status per Book.
+Changing it to `READ` is Finishing a Book.
+"""
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  READ
+}
+
+"""
+A User's opinion of a Book. It always has a Rating and can also have text.
+A User has at most one Review per Book.
+"""
+type Review {
+  id: ID!
+  "Rating: a whole number from 1 to 5."
+  rating: Int!
+  "The review text. Null when the User gave only a Rating."
+  text: String
+  "The reviewed Book. Null when Open Library no longer knows it."
+  book: Book
+  "The User who wrote the Review."
+  user: User!
+}
+
+"""
+A User, owned by users. library contributes their Shelves and Reviews.
+"""
+type User @key(fields: "id") {
+  id: ID!
+  "The User's three Status Shelves and all of their Custom Shelves."
+  shelves: [Shelf!]!
+  "Reviews the User has written."
+  reviews: [Review!]!
+}
+
+"""
+A Book, owned by catalog. library contributes ratings and Reviews from this app.
+"""
+type Book @key(fields: "id") {
+  id: ID!
+  "Mean Rating across all Reviews of this Book in this app. Null when it has no Reviews."
+  averageRating: Float
+  "Reviews of this Book written in this app."
+  reviews: [Review!]!
+  "The Reading Status of the viewers book. Null when they haven't set one or aren't signed in."
+  viewerReadingStatus: ReadingStatus
+}

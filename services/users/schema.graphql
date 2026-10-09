@@ -1,0 +1,41 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@key"])
+
+type Query {
+  "The Viewer. Fails with `UNAUTHENTICATED` when the request has no valid token."
+  me: User
+  "A User by username, for viewing their public profile. Null when no User has that username."
+  user(username: String!): User
+}
+
+type Mutation {
+  "Create a User and sign them in. Fails with `BAD_USER_INPUT` when the username is taken."
+  signUp(username: String!, "Defaults to `username` when omitted." displayName: String): AuthPayload!
+  "Development stub (NOT SECURE): returns a token for the User with this username without checking a password."
+  logIn(username: String!): AuthPayload!
+  "Change the Viewer's display name or bio. Omitted arguments are left unchanged."
+  updateProfile(displayName: String, bio: String): User!
+}
+
+"""
+A person who signs in and tracks Books. Only their public identity is exposed;
+credentials never are.
+"""
+type User @key(fields: "id") {
+  id: ID!
+  "Unique handle used to log in and to find the User's profile."
+  username: String!
+  "Name shown to other Users."
+  displayName: String!
+  "Short description the User writes about themselves. Null when they haven't written one."
+  bio: String
+}
+
+"""
+The result of signing up or logging in.
+"""
+type AuthPayload {
+  "HS256-signed JWT whose `sub` is the User id. Send it as `Authorization: Bearer <token>`."
+  token: String!
+  "The User the token belongs to."
+  user: User!
+}

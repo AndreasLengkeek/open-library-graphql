@@ -213,8 +213,8 @@ A milestone is complete when all its tasks are ticked and its headline outcome w
 
 ### 01 — Design before code ⭐ the most valuable checkpoint
 
-- [ ] [01.1 Entity map on paper](docs/tasks/01.1-entity-map.md)
-- [ ] [01.2 Write the subgraph schemas](docs/tasks/01.2-write-subgraph-schemas.md)
+- [x] [01.1 Entity map on paper](docs/tasks/01.1-entity-map.md)
+- [x] [01.2 Write the subgraph schemas](docs/tasks/01.2-write-subgraph-schemas.md)
 - [ ] [01.3 Compose offline](docs/tasks/01.3-compose-offline.md)
 - [ ] [01.4 Design review with Claude](docs/tasks/01.4-design-review.md)
 
