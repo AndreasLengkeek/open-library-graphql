@@ -13,7 +13,12 @@ type Mutation {
   "Development stub (NOT SECURE): returns a token for the User with this username without checking a password."
   logIn(username: String!): AuthPayload!
   "Change the Viewer's display name or bio. Omitted arguments are left unchanged."
-  updateProfile(displayName: String, bio: String): User!
+  updateProfile(
+    "Omit to keep the current name; `null` fails with `BAD_USER_INPUT` because every User has a display name."
+    displayName: String
+    "Omit to keep the current bio; `null` removes it."
+    bio: String
+  ): User!
 }
 
 """

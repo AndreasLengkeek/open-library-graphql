@@ -1,8 +1,8 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.14", import: ["@key"])
 
 type Mutation {
-  "Set the Viewer's Reading Status for a Book, which moves it between Status Shelves. Pass `status: null` to clear it. Returns the Book, or null when Open Library doesn't know it."
-  setReadingStatus(bookId: ID!, status: ReadingStatus): Book
+  "Set the Viewer's Reading Status for a Book, which moves it between Status Shelves. Pass `status: null` to clear it. Returns what changed, including the Status Shelves the Book left and joined."
+  setReadingStatus(bookId: ID!, status: ReadingStatus): ReadingStatusChange!
 
   "Create a Custom Shelf for the Viewer. Custom Shelf names are unique per User."
   createShelf(name: String!): CustomShelf!
@@ -18,7 +18,13 @@ type Mutation {
   "Write the Viewer's Review of a Book. Fails if the Viewer has already reviewed it. Doesn't change the Book's Reading Status."
   writeReview(bookId: ID!, "Whole number from 1 to 5." rating: Int!, text: String): Review!
   "Change the Rating or text of one of the Viewer's Reviews. Omitted arguments are left unchanged."
-  updateReview(id: ID!, "Whole number from 1 to 5." rating: Int, text: String): Review!
+  updateReview(
+    id: ID!
+    "Whole number from 1 to 5. Omit to keep the current Rating; `null` fails with `BAD_USER_INPUT` because a Review always has a Rating."
+    rating: Int
+    "Omit to keep the current text; `null` removes it, leaving only the Rating."
+    text: String
+  ): Review!
   "Delete one of the Viewer's Reviews. Returns the deleted Review's id."
   deleteReview(id: ID!): ID!
 }
@@ -70,6 +76,23 @@ type StatusShelf implements Shelf {
 }
 
 """
+The result of `setReadingStatus`: everything a client needs to update its
+cached Status Shelves without fetching them again.
+"""
+type ReadingStatusChange {
+  "The Book whose Reading Status changed. Present even when Open Library doesn't know the Book."
+  bookId: ID!
+  "The new Reading Status. Null when it was cleared."
+  status: ReadingStatus
+  "The Book. Null when Open Library doesn't know it; the change is still saved."
+  book: Book
+  "The Status Shelf the Book left. Null when it had no Reading Status before."
+  from: StatusShelf
+  "The Status Shelf the Book joined. Null when the Reading Status was cleared."
+  to: StatusShelf
+}
+
+"""
 Where a User is with a Book. A User has at most one Reading Status per Book.
 Changing it to `READ` is Finishing a Book.
 """
@@ -91,13 +114,13 @@ type Review {
   text: String
   "The reviewed Book. Null when Open Library no longer knows it."
   book: Book
-  "The User who wrote the Review."
-  user: User!
+  "The User who wrote the Review. Null when users can't resolve them, so one missing User doesn't null the whole Book."
+  user: User
 }
 
 type User @key(fields: "id") {
   id: ID!
-  "The User's three Status Shelves and all of their Custom Shelves."
+  "The User's three Status Shelves, in the order Want to read, Reading, Read, followed by their Custom Shelves, oldest created first."
   shelves: [Shelf!]!
   "Reviews the User has written."
   reviews: [Review!]!

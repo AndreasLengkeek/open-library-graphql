@@ -37,7 +37,7 @@ A named list of Books that belongs to one User. A Shelf is either a Custom Shelf
 _Avoid_: List, Collection, Tag
 
 **Custom Shelf**:
-A Shelf the User creates, names and deletes, such as "Favourites". A Book can be on any number of Custom Shelves, and at most once on each.
+A Shelf the User creates, names and deletes, such as "Favourites". A Book can be on any number of Custom Shelves, and at most once on each. Its name is unique among the User's Custom Shelves, but it may match a Status Shelf's name.
 
 **Status Shelf**:
 One of three fixed Shelves, "Want to read", "Reading" and "Read", that every User has. It shows the Books whose Reading Status matches, and it can't be renamed or deleted.
