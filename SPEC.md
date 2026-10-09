@@ -221,7 +221,7 @@ A milestone is complete when all its tasks are ticked and its headline outcome w
 ### 02 — Running locally
 
 - [x] [02.1 users subgraph](docs/tasks/02.1-users-subgraph.md)
-- [ ] [02.2 Codegen for resolver types](docs/tasks/02.2-codegen.md)
+- [x] [02.2 Codegen for resolver types](docs/tasks/02.2-codegen.md)
 - [ ] [02.3 catalog subgraph: search and Books](docs/tasks/02.3-catalog-books.md)
 - [ ] [02.4 catalog: expensive fields](docs/tasks/02.4-catalog-expensive-fields.md)
 - [ ] [02.5 library subgraph: read side](docs/tasks/02.5-library-read-side.md)

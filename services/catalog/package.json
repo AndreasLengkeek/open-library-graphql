@@ -3,12 +3,18 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "@graphql-codegen/cli": "^7.4.5",
+    "@graphql-codegen/typescript": "^6.1.1",
+    "@graphql-codegen/typescript-resolvers": "^6.1.1"
   },
   "dependencies": {
     "@apollo/server": "^5.5.1",
     "@apollo/subgraph": "^2.15.1",
     "graphql": "^16.14.2",
     "graphql-tag": "^2.12.7"
+  },
+  "scripts": {
+    "generate": "graphql-codegen"
   }
 }
