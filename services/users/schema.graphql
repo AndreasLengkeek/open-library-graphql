@@ -5,6 +5,7 @@ type Query {
   me: User
   "A User by username, for viewing their public profile. Null when no User has that username."
   user(username: String!): User
+  users: [User!]!
 }
 
 type Mutation {
