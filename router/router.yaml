@@ -1,3 +1,8 @@
 supergraph:
   listen: 127.0.0.1:4000
   introspection: true
+headers:
+  all:
+    request:
+      - propagate:
+          named: authorization

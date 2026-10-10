@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { decodeJwt, SignJWT } from 'jose';
-import { signToken, verifyToken } from './index.js';
+import { signToken, verifyToken, viewerFromAuthHeader } from './index.js';
 
 const TEST_SECRET = vi.hoisted(() => (process.env.JWT_SECRET = 'test secret'));
 
@@ -22,10 +22,10 @@ describe('signToken', () => {
 });
 
 describe('verifyToken', () => {
-  it('returns the payload of a token it signed', async () => {
+  it('returns the Viewer whose id is the sub of a token it signed', async () => {
     const token = await signToken({ sub: 'user-1', username: 'ada' });
 
-    await expect(verifyToken(token)).resolves.toMatchObject({ sub: 'user-1', username: 'ada' });
+    await expect(verifyToken(token)).resolves.toEqual({ id: 'user-1' });
   });
 
   it('rejects an expired token', async () => {
@@ -45,7 +45,7 @@ describe('verifyToken', () => {
 
     vi.setSystemTime(new Date('2026-01-07T23:59:00Z'));
 
-    await expect(verifyToken(token)).resolves.toMatchObject({ sub: 'user-1' });
+    await expect(verifyToken(token)).resolves.toEqual({ id: 'user-1' });
   });
 
   it('rejects a token signed with a different secret', async () => {
@@ -86,5 +86,24 @@ describe('verifyToken', () => {
 
   it('rejects a string that is not a JWT', async () => {
     await expect(verifyToken('not-a-token')).rejects.toThrow();
+  });
+});
+
+describe('viewerFromAuthHeader', () => {
+  it('returns null when there is no header', async () => {
+    await expect(viewerFromAuthHeader(undefined)).resolves.toBeNull();
+    await expect(viewerFromAuthHeader('')).resolves.toBeNull();
+  });
+
+  it('returns the Viewer for a valid Bearer token', async () => {
+    const token = await signToken({ sub: 'user-1', username: 'ada' });
+
+    await expect(viewerFromAuthHeader(`Bearer ${token}`)).resolves.toEqual({ id: 'user-1' });
+  });
+
+  it('fails with UNAUTHENTICATED and a 401 for a token that does not verify', async () => {
+    await expect(viewerFromAuthHeader('Bearer not-a-jwt')).rejects.toMatchObject({
+      extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
+    });
   });
 });

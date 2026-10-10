@@ -181,6 +181,9 @@ importers:
 
   packages/auth:
     dependencies:
+      graphql:
+        specifier: ^16.14.2
+        version: 16.14.2
       jose:
         specifier: ^6.2.12
         version: 6.2.12
@@ -209,6 +212,9 @@ importers:
       '@apollo/subgraph':
         specifier: ^2.15.1
         version: 2.15.1(graphql@16.14.2)
+      '@olg/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       graphql:
         specifier: ^16.14.2
         version: 16.14.2
@@ -243,6 +249,9 @@ importers:
       '@apollo/subgraph':
         specifier: ^2.15.1
         version: 2.15.1(graphql@16.14.2)
+      '@olg/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       better-sqlite3:
         specifier: ^13.0.3
         version: 13.0.3

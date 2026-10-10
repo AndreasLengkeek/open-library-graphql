@@ -1,12 +1,11 @@
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { createServer } from './server.js';
-import type { Context } from './context.js';
-import { createOpenLibraryClient } from './datasources/openLibrary.js';
+import { createContext } from './context.js';
 
 async function startApolloServer() {
   const server = createServer();
   const { url } = await startStandaloneServer(server, {
-    context: async (): Promise<Context> => ({ openLibrary: createOpenLibraryClient() }),
+    context: createContext(),
     listen: {
       port: 4002,
     },

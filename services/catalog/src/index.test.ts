@@ -15,7 +15,7 @@ afterEach(() => openLibraryServer.resetHandlers());
 afterAll(() => openLibraryServer.close());
 
 async function execute(query: string, variables?: Record<string, unknown>) {
-  const response = await server.executeOperation({ query, variables }, { contextValue: { openLibrary } });
+  const response = await server.executeOperation({ query, variables }, { contextValue: { openLibrary, viewer: null } });
   if (response.body.kind !== 'single') throw new Error('Expected a single result');
   return response.body.singleResult;
 }

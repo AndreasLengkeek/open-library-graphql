@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/server": "^5.5.1",
     "@apollo/subgraph": "^2.15.1",
+    "@olg/auth": "workspace:*",
     "better-sqlite3": "^13.0.3",
     "drizzle-orm": "^0.45.4",
     "graphql": "^16.14.2",

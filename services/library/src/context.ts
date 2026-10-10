@@ -1,9 +1,20 @@
+import type { IncomingMessage } from 'http';
+import { viewerFromAuthHeader, type Viewer } from '@olg/auth';
 import type { Db } from './db/index.js';
 
-// The signed-in User, or null when anonymous. Set from the Authorization header in 03.2.
-export type Viewer = { id: string };
+export type { Viewer };
 
 export type Context = {
   db: Db;
   viewer: Viewer | null;
 };
+
+export function createContext(db: Db) {
+  return async ({ req }: { req: Pick<IncomingMessage, 'headers'> }): Promise<Context> => {
+    const viewer = await viewerFromAuthHeader(req.headers.authorization);
+    return {
+      db,
+      viewer,
+    };
+  };
+}

@@ -6,9 +6,11 @@ import { GraphQLError } from 'graphql';
 
 export const resolvers: Resolvers = {
   Query: {
-    // temp return of null
-    me: () => {
-      return null;
+    me: (_, __, { db, viewer }) => {
+      if (!viewer) return null;
+
+      const user = db.select().from(users).where(eq(users.id, viewer.id)).get();
+      return user ?? null;
     },
     user: (_, { username }, { db }) => {
       return db.select().from(users).where(eq(users.username, username)).get() ?? null;

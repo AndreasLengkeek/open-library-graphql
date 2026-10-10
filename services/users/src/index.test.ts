@@ -21,7 +21,7 @@ function insertUser(values: Partial<UserRow> = {}): UserRow {
 }
 
 async function execute(query: string, variables?: Record<string, unknown>) {
-  const response = await server.executeOperation({ query, variables }, { contextValue: { db } });
+  const response = await server.executeOperation({ query, variables }, { contextValue: { db, viewer: null } });
   if (response.body.kind !== 'single') throw new Error('Expected a single result');
   return response.body.singleResult;
 }
@@ -88,7 +88,7 @@ describe('signUp', () => {
     const { token, user } = (result.data as { signUp: { token: string; user: { id: string } } })
       .signUp;
     expect(user).toMatchObject({ username: 'ada', displayName: 'Ada Lovelace' });
-    await expect(verifyToken(token)).resolves.toMatchObject({ sub: user.id });
+    await expect(verifyToken(token)).resolves.toEqual({ id: user.id });
     expect(db.select().from(users).all()).toHaveLength(1);
   });
 
@@ -130,7 +130,7 @@ describe('logIn', () => {
     expect(result.errors).toBeUndefined();
     const { token } = (result.data as { logIn: { token: string } }).logIn;
     expect(result.data).toMatchObject({ logIn: { user: { id: user.id, username: 'ada' } } });
-    await expect(verifyToken(token)).resolves.toMatchObject({ sub: user.id });
+    await expect(verifyToken(token)).resolves.toEqual({ id: user.id });
   });
 
   it('logs in a User created by signUp', async () => {
@@ -150,7 +150,7 @@ describe('logIn', () => {
     const result = await execute(mutation, { username: 'ada' });
 
     const { token } = (result.data as { logIn: { token: string } }).logIn;
-    await expect(verifyToken(token)).resolves.toMatchObject({ sub: id });
+    await expect(verifyToken(token)).resolves.toEqual({ id });
   });
 
   it('fails with BAD_USER_INPUT for an unknown username', async () => {
