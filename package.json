@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "concurrently -k -n users,catalog,library,router -c blue,green,magenta,yellow \"pnpm --filter @olg/users dev\" \"pnpm --filter @olg/catalog dev\" \"pnpm --filter @olg/library dev\" \"pnpm rover-dev\"",
     "test": "vitest run",
+    "e2e": "node scripts/e2e.ts",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "seed": "pnpm --filter @olg/seed seed",
     "fixtures:record": "pnpm --filter @olg/catalog fixtures:record",
