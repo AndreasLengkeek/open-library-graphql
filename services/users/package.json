@@ -20,7 +20,7 @@
     "graphql-tag": "^2.12.7"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --include schema.graphql src/index.ts",
     "db:generate": "drizzle-kit generate",
     "codegen": "graphql-codegen"
   }

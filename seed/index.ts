@@ -9,4 +9,5 @@ const usersUrl = path.join(services, 'users/users.db');
 const libraryUrl = path.join(services, 'library/library.db');
 
 seed(createUsersDb(usersUrl), createLibraryDb(libraryUrl));
-console.log(`Seeded ${usersUrl} and ${libraryUrl}`);
+console.log(`Seeded ${usersUrl}`);
+console.log(`Seeded ${libraryUrl}`);

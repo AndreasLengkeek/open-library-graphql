@@ -2,10 +2,12 @@
   "name": "open-library-graphql",
   "private": true,
   "scripts": {
+    "dev": "concurrently -k -n users,catalog,library,router -c blue,green,magenta,yellow \"pnpm --filter @olg/users dev\" \"pnpm --filter @olg/catalog dev\" \"pnpm --filter @olg/library dev\" \"pnpm rover-dev\"",
     "test": "vitest run",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "seed": "pnpm --filter @olg/seed seed",
     "fixtures:record": "pnpm --filter @olg/catalog fixtures:record",
+    "rover-dev": "APOLLO_ELV2_LICENSE=accept rover dev --supergraph-config router/supergraph.yaml --router-config router/router.yaml",
     "compose": "APOLLO_ELV2_LICENSE=accept rover supergraph compose --config router/supergraph.yaml > router/supergraph.graphql",
     "codegen": "pnpm -r codegen",
     "codegen:check": "pnpm codegen && git diff --exit-code -- \"services/*/src/types.generated.ts\""
@@ -17,6 +19,7 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^26.6.4",
+    "concurrently": "^10.0.6",
     "typescript": "^7.0.2",
     "vitest": "^5.0.3"
   }

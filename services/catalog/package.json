@@ -17,7 +17,7 @@
     "graphql-tag": "^2.12.7"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --include schema.graphql src/index.ts",
     "codegen": "graphql-codegen",
     "fixtures:record": "tsx test/recordFixtures.ts"
   }
