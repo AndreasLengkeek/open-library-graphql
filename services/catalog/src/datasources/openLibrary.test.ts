@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { OPEN_LIBRARY_URL, openLibraryServer, searchReturns } from '../../test/openLibraryServer.js';
-import { createOpenLibraryClient } from './openLibrary.js';
+import { createOpenLibraryClient, createRequestCounter } from './openLibrary.js';
 
 beforeAll(() => openLibraryServer.listen({ onUnhandledFrame: 'error' }));
 afterEach(() => openLibraryServer.resetHandlers());
@@ -126,5 +126,20 @@ describe('requestCount', () => {
 
     expect(client.requestCount).toBe(2);
     expect(other.requestCount).toBe(1);
+  });
+});
+
+describe('a shared request counter', () => {
+  it('counts the requests of every client it is given to, until reset', async () => {
+    const counter = createRequestCounter();
+    const client = () => createOpenLibraryClient({ baseUrl: OPEN_LIBRARY_URL, userAgent: 'olg-test', counter });
+
+    await client().searchWorks('dune', 5);
+    await client().getWork('OL893414W');
+    expect(counter.count).toBe(2);
+
+    counter.reset();
+    await client().searchWorks('dune', 5);
+    expect(counter.count).toBe(1);
   });
 });

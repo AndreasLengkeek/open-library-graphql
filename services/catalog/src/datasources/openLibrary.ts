@@ -25,10 +25,29 @@ export const DEFAULT_BASE_URL = 'https://openlibrary.org';
 export const DEFAULT_USER_AGENT =
   process.env.OPEN_LIBRARY_USER_AGENT ?? 'reading-tracker-dev (andreas.lengkeek@gmail.com)';
 
+/**
+ * Counts Open Library requests across clients. The catalog makes one client per subgraph request,
+ * so this is how one router operation's total is measured (04.1).
+ */
+export function createRequestCounter() {
+  let count = 0;
+  return {
+    get count() {
+      return count;
+    },
+    increment: () => void count++,
+    reset: () => void (count = 0),
+  };
+}
+
+export type RequestCounter = ReturnType<typeof createRequestCounter>;
+
 type Options = {
   baseUrl?: string;
   userAgent?: string;
   timeoutMs?: number;
+  /** Also counts this client's requests, alongside `requestCount`. */
+  counter?: RequestCounter;
 };
 
 /**
@@ -38,11 +57,13 @@ export function createOpenLibraryClient({
   baseUrl = DEFAULT_BASE_URL,
   userAgent = DEFAULT_USER_AGENT,
   timeoutMs = 5000,
+  counter,
 }: Options = {}) {
   let requestCount = 0;
 
   async function request<T>(url: URL) {
     requestCount++;
+    counter?.increment();
     const res = await fetch(url, {
       headers: { 'User-Agent': userAgent },
       signal: AbortSignal.timeout(timeoutMs),

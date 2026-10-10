@@ -13,3 +13,6 @@ telemetry:
     events:
       subgraph:
         request: warn
+# Return the query plan in `extensions` when a request sends `Apollo-Expose-Query-Plan: true`.
+plugins:
+  experimental.expose_query_plan: true

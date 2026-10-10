@@ -187,7 +187,7 @@ These are the constraints your schema and resolvers must enforce. Definitions ar
 
 | Thing        | Convention                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------------- |
-| Ports        | router `4000`, users `4001`, catalog `4002`, library `4003`                                              |
+| Ports        | router `4000`, users `4001`, catalog `4002`, library `4003`; catalog debug counter `4012` (04.1)         |
 | Env vars     | `JWT_SECRET`, `OPEN_LIBRARY_USER_AGENT`, `DATABASE_URL` (per subgraph), `APOLLO_KEY`, `APOLLO_GRAPH_REF` |
 | Open Library | Always send `User-Agent: reading-tracker-dev (<your email>)`. No caching until task 04.4.                |
 | Error codes  | `extensions.code`: `UNAUTHENTICATED`, `FORBIDDEN`, `BAD_USER_INPUT`, `NOT_FOUND`                         |
