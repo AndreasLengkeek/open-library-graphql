@@ -6,3 +6,10 @@ headers:
     request:
       - propagate:
           named: authorization
+# Log one line per subgraph request, so the subgraphs an operation touches show up in `pnpm dev`.
+# `warn` because rover dev only passes through router output at WARN and above.
+telemetry:
+  instrumentation:
+    events:
+      subgraph:
+        request: warn

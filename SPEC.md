@@ -232,7 +232,7 @@ A milestone is complete when all its tasks are ticked and its headline outcome w
 - [x] [03.1 Stub sign-up and log-in](docs/tasks/03.1-stub-login.md)
 - [x] [03.2 Forward and verify the token](docs/tasks/03.2-forward-and-verify-token.md)
 - [x] [03.3 The `me` query end to end](docs/tasks/03.3-me-end-to-end.md)
-- [ ] [03.4 Read the query plan](docs/tasks/03.4-query-plan.md)
+- [x] [03.4 Read the query plan](docs/tasks/03.4-query-plan.md) (skipped)
 
 ### 04 — Performance
 
