@@ -18,6 +18,6 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "generate": "graphql-codegen"
+    "codegen": "graphql-codegen"
   }
 }

@@ -1,4 +1,5 @@
 import type { GraphQLResolveInfo } from 'graphql';
+import type { ReviewModel, CustomShelfModel, StatusShelfModel, BookRef, UserRef } from './mappers.js';
 import type { Context } from './context.js';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -119,11 +120,10 @@ export type MutationWriteReviewArgs = {
  * Where a User is with a Book. A User has at most one Reading Status per Book.
  * Changing it to `READ` is Finishing a Book.
  */
-export enum ReadingStatus {
-  Read = 'READ',
-  Reading = 'READING',
-  WantToRead = 'WANT_TO_READ'
-}
+export type ReadingStatus =
+  | 'READ'
+  | 'READING'
+  | 'WANT_TO_READ';
 
 /**
  * The result of `setReadingStatus`: everything a client needs to update its
@@ -300,43 +300,43 @@ export type FederationReferenceTypes = {
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
   Shelf:
-    | ( Omit<CustomShelf, 'books' | 'user'> & { books: Array<Maybe<_RefType['Book']>>, user: _RefType['User'] } )
-    | ( Omit<StatusShelf, 'books' | 'user'> & { books: Array<Maybe<_RefType['Book']>>, user: _RefType['User'] } )
+    | ( CustomShelfModel )
+    | ( StatusShelfModel )
   ;
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Book: ResolverTypeWrapper<Omit<Book, 'reviews'> & { reviews: Array<ResolversTypes['Review']> }>;
+  Book: ResolverTypeWrapper<BookRef>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  CustomShelf: ResolverTypeWrapper<Omit<CustomShelf, 'books' | 'user'> & { books: Array<Maybe<ResolversTypes['Book']>>, user: ResolversTypes['User'] }>;
+  CustomShelf: ResolverTypeWrapper<CustomShelfModel>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   ReadingStatus: ReadingStatus;
   ReadingStatusChange: ResolverTypeWrapper<Omit<ReadingStatusChange, 'book' | 'from' | 'to'> & { book?: Maybe<ResolversTypes['Book']>, from?: Maybe<ResolversTypes['StatusShelf']>, to?: Maybe<ResolversTypes['StatusShelf']> }>;
-  Review: ResolverTypeWrapper<Omit<Review, 'book' | 'user'> & { book?: Maybe<ResolversTypes['Book']>, user?: Maybe<ResolversTypes['User']> }>;
+  Review: ResolverTypeWrapper<ReviewModel>;
   Shelf: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Shelf']>;
-  StatusShelf: ResolverTypeWrapper<Omit<StatusShelf, 'books' | 'user'> & { books: Array<Maybe<ResolversTypes['Book']>>, user: ResolversTypes['User'] }>;
-  User: ResolverTypeWrapper<Omit<User, 'reviews' | 'shelves'> & { reviews: Array<ResolversTypes['Review']>, shelves: Array<ResolversTypes['Shelf']> }>;
+  StatusShelf: ResolverTypeWrapper<StatusShelfModel>;
+  User: ResolverTypeWrapper<UserRef>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Book: Omit<Book, 'reviews'> & { reviews: Array<ResolversParentTypes['Review']> } | FederationReferenceTypes['Book'];
+  Book: BookRef;
   Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
-  CustomShelf: Omit<CustomShelf, 'books' | 'user'> & { books: Array<Maybe<ResolversParentTypes['Book']>>, user: ResolversParentTypes['User'] };
+  CustomShelf: CustomShelfModel;
   String: Scalars['String']['output'];
   Mutation: Record<PropertyKey, never>;
   Int: Scalars['Int']['output'];
   ReadingStatusChange: Omit<ReadingStatusChange, 'book' | 'from' | 'to'> & { book?: Maybe<ResolversParentTypes['Book']>, from?: Maybe<ResolversParentTypes['StatusShelf']>, to?: Maybe<ResolversParentTypes['StatusShelf']> };
-  Review: Omit<Review, 'book' | 'user'> & { book?: Maybe<ResolversParentTypes['Book']>, user?: Maybe<ResolversParentTypes['User']> };
+  Review: ReviewModel;
   Shelf: ResolversInterfaceTypes<ResolversParentTypes>['Shelf'];
-  StatusShelf: Omit<StatusShelf, 'books' | 'user'> & { books: Array<Maybe<ResolversParentTypes['Book']>>, user: ResolversParentTypes['User'] };
-  User: Omit<User, 'reviews' | 'shelves'> & { reviews: Array<ResolversParentTypes['Review']>, shelves: Array<ResolversParentTypes['Shelf']> } | FederationReferenceTypes['User'];
+  StatusShelf: StatusShelfModel;
+  User: UserRef;
   Boolean: Scalars['Boolean']['output'];
 };
 

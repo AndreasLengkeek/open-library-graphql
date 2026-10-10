@@ -22,6 +22,6 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "db:generate": "drizzle-kit generate",
-    "generate": "graphql-codegen"
+    "codegen": "graphql-codegen"
   }
 }

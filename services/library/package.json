@@ -3,20 +3,25 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "tsx": "^4.23.15",
-    "typescript": "^7.0.2",
     "@graphql-codegen/cli": "^7.4.5",
     "@graphql-codegen/typescript": "^6.1.1",
-    "@graphql-codegen/typescript-resolvers": "^6.1.1"
+    "@graphql-codegen/typescript-resolvers": "^6.1.1",
+    "@types/better-sqlite3": "^9.6.0",
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@apollo/server": "^5.5.1",
     "@apollo/subgraph": "^2.15.1",
+    "better-sqlite3": "^13.0.3",
+    "drizzle-orm": "^0.45.4",
     "graphql": "^16.14.2",
     "graphql-tag": "^2.12.7"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "generate": "graphql-codegen"
+    "db:generate": "drizzle-kit generate",
+    "codegen": "graphql-codegen"
   }
 }

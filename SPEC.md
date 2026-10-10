@@ -224,7 +224,7 @@ A milestone is complete when all its tasks are ticked and its headline outcome w
 - [x] [02.2 Codegen for resolver types](docs/tasks/02.2-codegen.md)
 - [x] [02.3 catalog subgraph: search and Books](docs/tasks/02.3-catalog-books.md)
 - [x] [02.4 catalog: expensive fields](docs/tasks/02.4-catalog-expensive-fields.md)
-- [ ] [02.5 library subgraph: read side](docs/tasks/02.5-library-read-side.md)
+- [x] [02.5 library subgraph: read side](docs/tasks/02.5-library-read-side.md)
 - [ ] [02.6 Seed data and test fixtures](docs/tasks/02.6-seed-and-fixtures.md)
 - [ ] [02.7 Compose with rover dev](docs/tasks/02.7-rover-dev.md)
 

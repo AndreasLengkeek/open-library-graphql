@@ -5,7 +5,7 @@
     "test": "vitest run",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "compose": "APOLLO_ELV2_LICENSE=accept rover supergraph compose --config router/supergraph.yaml > router/supergraph.graphql",
-    "codegen": "pnpm -r generate",
+    "codegen": "pnpm -r codegen",
     "codegen:check": "pnpm codegen && git diff --exit-code -- \"services/*/src/types.generated.ts\""
   },
   "packageManager": "pnpm@12.10.1",
