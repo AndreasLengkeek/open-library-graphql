@@ -11,8 +11,10 @@ type Query {
 type Mutation {
   "Create a User and sign them in. Fails with `BAD_USER_INPUT` when the username is taken."
   signUp(username: String!, "Defaults to `username` when omitted." displayName: String): AuthPayload!
+
   "Development stub (NOT SECURE): returns a token for the User with this username without checking a password."
   logIn(username: String!): AuthPayload!
+
   "Change the Viewer's display name or bio. Omitted arguments are left unchanged."
   updateProfile(
     "Omit to keep the current name; `null` fails with `BAD_USER_INPUT` because every User has a display name."

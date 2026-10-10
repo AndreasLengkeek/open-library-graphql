@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { verifyToken } from '@olg/auth';
 import { createDb, type Db } from './db/index.js';
 import { users, type UserRow } from './db/schema.js';
 import { createServer } from './server.js';
@@ -63,6 +64,102 @@ describe('user(username)', () => {
 
     expect(result.errors).toBeUndefined();
     expect(result.data).toEqual({ user: null });
+  });
+});
+
+describe('signUp', () => {
+  const mutation = /* GraphQL */ `
+    mutation SignUp($username: String!, $displayName: String) {
+      signUp(username: $username, displayName: $displayName) {
+        token
+        user {
+          id
+          username
+          displayName
+        }
+      }
+    }
+  `;
+
+  it('creates the User and returns a token whose sub is their id', async () => {
+    const result = await execute(mutation, { username: 'ada', displayName: 'Ada Lovelace' });
+
+    expect(result.errors).toBeUndefined();
+    const { token, user } = (result.data as { signUp: { token: string; user: { id: string } } })
+      .signUp;
+    expect(user).toMatchObject({ username: 'ada', displayName: 'Ada Lovelace' });
+    await expect(verifyToken(token)).resolves.toMatchObject({ sub: user.id });
+    expect(db.select().from(users).all()).toHaveLength(1);
+  });
+
+  it('defaults displayName to the username', async () => {
+    const result = await execute(mutation, { username: 'ada' });
+
+    expect(result.data).toMatchObject({ signUp: { user: { displayName: 'ada' } } });
+  });
+
+  it('fails with BAD_USER_INPUT when the username is taken', async () => {
+    insertUser();
+
+    const result = await execute(mutation, { username: 'ada' });
+
+    expect(result.data).toBeNull();
+    expect(result.errors?.[0].extensions?.code).toBe('BAD_USER_INPUT');
+    expect(db.select().from(users).all()).toHaveLength(1);
+  });
+});
+
+describe('logIn', () => {
+  const mutation = /* GraphQL */ `
+    mutation LogIn($username: String!) {
+      logIn(username: $username) {
+        token
+        user {
+          id
+          username
+        }
+      }
+    }
+  `;
+
+  it('returns a token whose sub is the id of the User with that username', async () => {
+    const user = insertUser();
+
+    const result = await execute(mutation, { username: 'ada' });
+
+    expect(result.errors).toBeUndefined();
+    const { token } = (result.data as { logIn: { token: string } }).logIn;
+    expect(result.data).toMatchObject({ logIn: { user: { id: user.id, username: 'ada' } } });
+    await expect(verifyToken(token)).resolves.toMatchObject({ sub: user.id });
+  });
+
+  it('logs in a User created by signUp', async () => {
+    const signUp = await execute(
+      /* GraphQL */ `
+        mutation {
+          signUp(username: "ada") {
+            user {
+              id
+            }
+          }
+        }
+      `,
+    );
+    const { id } = (signUp.data as { signUp: { user: { id: string } } }).signUp.user;
+
+    const result = await execute(mutation, { username: 'ada' });
+
+    const { token } = (result.data as { logIn: { token: string } }).logIn;
+    await expect(verifyToken(token)).resolves.toMatchObject({ sub: id });
+  });
+
+  it('fails with BAD_USER_INPUT for an unknown username', async () => {
+    insertUser();
+
+    const result = await execute(mutation, { username: 'nobody' });
+
+    expect(result.data).toBeNull();
+    expect(result.errors?.[0].extensions?.code).toBe('BAD_USER_INPUT');
   });
 });
 
