@@ -3,6 +3,8 @@ import { isWorkId } from './ids.js';
 import { toBook } from './mappers.js';
 import type { Resolvers } from './types.generated.js';
 
+const AUTHOR_BOOK_LIMIT = 20;
+
 export const resolvers: Resolvers = {
   Query: {
     book: async (_, { id }, { openLibrary }) => {
@@ -25,6 +27,18 @@ export const resolvers: Resolvers = {
       if (!isWorkId(id)) return null;
       const doc = await openLibrary.getWork(id);
       return doc && toBook(doc);
+    },
+  },
+  Author: {
+    bio: async ({ id }, _, { openLibrary }) => {
+      const bio = (await openLibrary.getAuthor(id))?.bio;
+      return typeof bio === 'string' ? bio : (bio?.value ?? null);
+    },
+    birthDate: async ({ id }, _, { openLibrary }) => {
+      return (await openLibrary.getAuthor(id))?.birth_date ?? null;
+    },
+    books: async ({ id }, _, { openLibrary }) => {
+      return (await openLibrary.getAuthorsBooks(id, AUTHOR_BOOK_LIMIT))?.map(toBook);
     },
   },
 };

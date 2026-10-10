@@ -1,0 +1,39 @@
+{
+  "name": "Thomas Harris",
+  "source_records": [
+    "amazon:0099586576"
+  ],
+  "type": {
+    "key": "/type/author"
+  },
+  "alternate_names": [
+    "Thomas Harris,Thomas Harris"
+  ],
+  "photos": [
+    6456157
+  ],
+  "birth_date": "April 11, 1940",
+  "personal_name": "Thomas Harris",
+  "remote_ids": {
+    "viaf": "110527100",
+    "wikidata": "Q313377",
+    "isni": "0000000084077953",
+    "bookbrainz": "375cbbc0-7c6f-4948-ac7c-ca0263e3be2f",
+    "musicbrainz": "6e3b1135-93b7-416e-b53f-bdcce8917901",
+    "goodreads": "12455",
+    "imdb": "nm0365383",
+    "lc_naf": "n81053578",
+    "opac_sbn": "CFIV043020"
+  },
+  "key": "/authors/OL2032671A",
+  "latest_revision": 10,
+  "revision": 10,
+  "created": {
+    "type": "/type/datetime",
+    "value": "2008-04-01T03:28:50.625462"
+  },
+  "last_modified": {
+    "type": "/type/datetime",
+    "value": "2025-07-31T19:28:43.282058"
+  }
+}

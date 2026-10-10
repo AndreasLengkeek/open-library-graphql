@@ -92,6 +92,29 @@ describe('getWork', () => {
   });
 });
 
+describe('getAuthor', () => {
+  it('returns the doc for a known Author', async () => {
+    const doc = await createClient().getAuthor('OL26320A');
+    expect(doc).toMatchObject({ key: '/authors/OL26320A', name: 'J.R.R. Tolkien' });
+  });
+
+  it('throw 404 for an Author Open Library does not know', async () => {
+    openLibraryServer.use(
+      http.get(`${OPEN_LIBRARY_URL}/authors/:id.json`, () => new HttpResponse(null, { status: 404 })),
+    );
+
+    await expect(createClient().getAuthor('OL00000A')).rejects.toThrow(/Open Library 404/);
+  });
+});
+
+describe('getAuthorsBooks', () => {
+  it('returns the books for a known Author', async () => {
+    const docs = await createClient().getAuthorsBooks('OL26320A', 5);
+    expect(docs).toHaveLength(5);
+    expect(docs[0]).toMatchObject({ key: '/works/OL27482W', title: 'The Hobbit', author_name: ['J.R.R. Tolkien'] });
+  });
+});
+
 describe('requestCount', () => {
   it('counts the requests each client makes, separately from other clients', async () => {
     const client = createClient();

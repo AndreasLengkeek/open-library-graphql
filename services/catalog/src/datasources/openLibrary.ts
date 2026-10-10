@@ -11,6 +11,13 @@ export type SearchDoc = {
   description?: string;
 };
 
+export type AuthorRecord = {
+  key: string;
+  name: string;
+  bio?: string | { type: string; value: string };
+  birth_date?: string;
+};
+
 const FIELDS = 'key,title,author_key,author_name,first_publish_year,cover_i,isbn,subject,description';
 const MAX_LIMIT = 50;
 
@@ -25,24 +32,32 @@ type Options = {
  */
 export function createOpenLibraryClient({
   baseUrl = 'https://openlibrary.org',
-  userAgent = process.env.OPEN_LIBRARY_USER_AGENT ?? 'reading-tracker-dev andreas.lengkeek@gmail.com',
+  userAgent = process.env.OPEN_LIBRARY_USER_AGENT ?? 'reading-tracker-dev (andreas.lengkeek@gmail.com)',
   timeoutMs = 5000,
 }: Options = {}) {
   let requestCount = 0;
 
-  async function search(params: Record<string, string>): Promise<SearchDoc[]> {
-    const url = new URL('/search.json', baseUrl);
-    url.search = new URLSearchParams({ ...params, fields: FIELDS }).toString();
-
+  async function request<T>(url: URL) {
     requestCount++;
     const res = await fetch(url, {
       headers: { 'User-Agent': userAgent },
       signal: AbortSignal.timeout(timeoutMs),
     });
     if (!res.ok) throw new Error(`Open Library ${res.status} for ${url}`);
+    return (await res.json()) as T;
+  }
 
-    const body = (await res.json()) as { docs: SearchDoc[] };
-    return body.docs;
+  async function search(params: Record<string, string>): Promise<SearchDoc[]> {
+    const url = new URL('/search.json', baseUrl);
+    url.search = new URLSearchParams({ ...params, fields: FIELDS }).toString();
+
+    return (await request<{ docs: SearchDoc[] }>(url)).docs;
+  }
+
+  async function getAuthor(id: string): Promise<AuthorRecord | null> {
+    const url = new URL(`/authors/${id}.json`, baseUrl);
+
+    return await request<AuthorRecord>(url);
   }
 
   return {
@@ -56,6 +71,13 @@ export function createOpenLibraryClient({
 
     /** One Work by its key eg: `OL45804W`. */
     getWork: async (workId: string) => (await search({ q: `key:/works/${workId}`, limit: '1' }))[0] ?? null,
+
+    /** Get an author */
+    getAuthor: async (authorId: string) => await getAuthor(authorId),
+
+    /** Get an authors books */
+    getAuthorsBooks: async (authorId: string, limit: number) =>
+      await search({ q: `author_key:${authorId}`, limit: String(Math.min(Math.max(limit, 1), MAX_LIMIT)) }),
   };
 }
 

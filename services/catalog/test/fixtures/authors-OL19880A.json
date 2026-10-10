@@ -1,0 +1,85 @@
+{
+  "source_records": [
+    "promise:bwb_daily_pallets_2022-09-12:O8-BEX-877",
+    "promise:bwb_daily_pallets_2022-05-23:316-BAA-727",
+    "promise:bwb_daily_pallets_2022-04-19:258-BAB-615",
+    "promise:bwb_daily_pallets_2023-04-24:P8-DCA-466",
+    "promise:bwb_daily_pallets_2021-02-11",
+    "promise:bwb_daily_pallets_2023-03-27:W8-ARQ-309",
+    "promise:bwb_daily_pallets_2023-06-02:P6-CDT-971",
+    "promise:bwb_daily_pallets_2021-01-28",
+    "promise:bwb_daily_pallets_2022-05-23",
+    "promise:bwb_daily_pallets_2022-10-17:O8-CYT-021",
+    "amazon:0593066200",
+    "promise:bwb_daily_pallets_2023-03-06:P8-BYD-522",
+    "promise:bwb_daily_pallets_2023-12-01:P8-BYU-520",
+    "amazon:1415566100",
+    "amazon:1469285924",
+    "amazon:149154340X",
+    "promise:bwb_daily_pallets_2022-03-17",
+    "promise:bwb_daily_pallets_2021-06-14",
+    "promise:bwb_daily_pallets_2020-12-09",
+    "promise:bwb_daily_pallets_2020-10-08",
+    "promise:bwb_daily_pallets_2024-01-catchup:P8-AJE-697",
+    "promise:bwb_daily_pallets_2024-02-15:P9-BXN-248",
+    "amazon:0593044657",
+    "bwb:9781804996690",
+    "ia:analogsciencefic0000anne",
+    "ia:bwb_P8-ATH-833",
+    "ia:bwb_P9-EEF-778",
+    "ia:crisisondoona0000anne_b9u8",
+    "ia:dragonridersofpe0000anne",
+    "ia:isbn_2266072641",
+    "ia:partnership0000anne",
+    "ia:planetpiratessas0000anne",
+    "ia:bwb_P8-AJE-697",
+    "ia:bwb_aO7-BBT-660",
+    "ia:carradynetouch0000unse",
+    "bwb:9781857234442",
+    "amazon:8496940624",
+    "promise:bwb_daily_pallets_2023-01-04",
+    "promise:bwb_daily_pallets_2024-12-06:KU-456-138"
+  ],
+  "name": "Anne McCaffrey",
+  "photos": [
+    6449643
+  ],
+  "key": "/authors/OL19880A",
+  "personal_name": "McCaffrey, Anne.",
+  "birth_date": "1 April 1926",
+  "remote_ids": {
+    "viaf": "110586836",
+    "isni": "0000000122841319",
+    "wikidata": "Q233046",
+    "gnd": "11920732X",
+    "bookbrainz": "e9ccc9d9-9e24-45c9-a760-9b516cd186b9",
+    "musicbrainz": "3a94fac0-8558-4bb6-b599-b938c64770e7",
+    "goodreads": "26",
+    "imdb": "nm2275817",
+    "lc_naf": "n50009225",
+    "librarything": "mccaffreyanne",
+    "opac_sbn": "CFIV109914"
+  },
+  "type": {
+    "key": "/type/author"
+  },
+  "death_date": "21 November 2011",
+  "alternate_names": [
+    "Mary Anne McCaffrey",
+    "Anne McCaffey"
+  ],
+  "bio": {
+    "type": "/type/text",
+    "value": "Anne Inez McCaffrey was an American writer known for the Dragonriders of Pern science fiction series. She was the first woman to win a Hugo Award for fiction (Best Novella, Weyr Search, 1968) and the first to win a Nebula Award (Best Novella, Dragonrider, 1969). Her 1978 novel The White Dragon became one of the first science-fiction books to appear on the New York Times Best Seller list.\r\n\r\nIn 2005 the Science Fiction and Fantasy Writers of America named McCaffrey its 22nd Grand Master, an annual award to living writers of fantasy and science fiction. She was inducted by the Science Fiction Hall of Fame on 17 June 2006. She also received the Robert A. Heinlein Award for her work in 2007."
+  },
+  "latest_revision": 18,
+  "revision": 18,
+  "created": {
+    "type": "/type/datetime",
+    "value": "2008-04-01T03:28:50.625462"
+  },
+  "last_modified": {
+    "type": "/type/datetime",
+    "value": "2026-04-03T16:19:29.092578"
+  }
+}

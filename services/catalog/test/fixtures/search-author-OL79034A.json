@@ -1,10 +1,10 @@
 {
-  "numFound": 48315,
+  "numFound": 142,
   "start": 0,
   "numFoundExact": true,
-  "num_found": 48315,
+  "num_found": 142,
   "documentation_url": "https://openlibrary.org/dev/docs/api/search",
-  "q": "dune",
+  "q": "author_key:OL79034A",
   "offset": null,
   "docs": [
     {

@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { OPEN_LIBRARY_URL, openLibraryServer, searchReturns } from '../test/openLibraryServer.js';
+import { authorReturns, OPEN_LIBRARY_URL, openLibraryServer, searchReturns } from '../test/openLibraryServer.js';
 import { createOpenLibraryClient, type OpenLibraryClient } from './datasources/openLibrary.js';
 import { createServer } from './server.js';
 
@@ -55,6 +55,36 @@ describe('searchBooks', () => {
     await execute(query, { query: 'dune', first: 5 });
 
     expect(openLibrary.requestCount).toBe(1);
+  });
+
+  describe('asking for authors { bio }', () => {
+    const bioQuery = /* GraphQL */ `
+      query Search($query: String!, $first: Int!) {
+        searchBooks(query: $query, first: $first) {
+          authors {
+            bio
+          }
+        }
+      }
+    `;
+
+    it('makes 1 + (number of distinct Authors) requests', async () => {
+      // 5 "dragons" results by 5 different Authors.
+      const result = await execute(bioQuery, { query: 'dragons', first: 5 });
+
+      expect(result.errors).toBeUndefined();
+      const { searchBooks } = result.data as { searchBooks: unknown[] };
+      expect(searchBooks).toHaveLength(5);
+      expect(openLibrary.requestCount).toBe(1 + 5);
+    });
+
+    it('fetches a shared Author once per Book, not once per request', async () => {
+      // All 5 "dune" results are by Frank Herbert. Without de-duplication (04.3), that's still 5 lookups.
+      const result = await execute(bioQuery, { query: 'dune', first: 5 });
+
+      expect(result.errors).toBeUndefined();
+      expect(openLibrary.requestCount).toBe(1 + 5);
+    });
   });
 });
 
@@ -152,6 +182,72 @@ describe('book(id)', () => {
         ],
       },
     });
+  });
+});
+
+describe('book(id) with author', () => {
+  const query = /* GraphQL */ `
+    query Book($id: ID!) {
+      book(id: $id) {
+        id
+        title
+        description
+        authors {
+          name
+          bio
+          birthDate
+          books {
+            title
+          }
+        }
+      }
+    }
+  `;
+
+  it('returns the Book with author key', async () => {
+    const result = await execute(query, { id: 'OL893414W' });
+
+    expect(result.errors).toBeUndefined();
+    expect(result.data).toMatchObject({
+      book: {
+        id: 'OL893414W',
+        title: 'Dune',
+        authors: [
+          {
+            name: 'Frank Herbert',
+            birthDate: '8 October 1920',
+            bio: expect.stringMatching(/best known for his 1965 novel Dune and its five sequels/),
+            books: expect.arrayContaining([{ title: 'Dune' }]),
+          },
+        ],
+      },
+    });
+  });
+
+  it('unwraps a bio Open Library returns as { type, value }', async () => {
+    openLibraryServer.use(
+      authorReturns({
+        key: '/authors/OL79034A',
+        name: 'Frank Herbert',
+        bio: { type: '/type/text', value: 'American science fiction author.' },
+      }),
+    );
+
+    const result = await execute(
+      /* GraphQL */ `
+        query Book($id: ID!) {
+          book(id: $id) {
+            authors {
+              bio
+            }
+          }
+        }
+      `,
+      { id: 'OL893414W' },
+    );
+
+    expect(result.errors).toBeUndefined();
+    expect(result.data).toEqual({ book: { authors: [{ bio: 'American science fiction author.' }] } });
   });
 });
 

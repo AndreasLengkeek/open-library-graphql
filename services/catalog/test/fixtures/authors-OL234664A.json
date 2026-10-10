@@ -1,0 +1,139 @@
+{
+  "alternate_names": [
+    "Qiao Zhi R R Ma Ding",
+    "George Raymond Richard Martin",
+    "Джордж Р. Р. Мартін",
+    "George  R.R. Martin",
+    "GEORGE R.R. MARTIN",
+    "George Martin",
+    "George R R Martin",
+    "George R.R. Martin  (editor)",
+    "Martin. George R.R.",
+    "George R. R Martin",
+    "George R.R Martin",
+    "Martin, George R.R (George R.R Martin)",
+    "George R.R. MARTIN",
+    "Martin George R.R",
+    "George RR Martin",
+    "GEORGE R. R. Martin",
+    "George r.r MARTIN",
+    "Martin,George R.R.",
+    "\"MARTIN, GEORGE, R.R.",
+    "MARTIN RR. George",
+    "Mading",
+    "جورج ر. ر. مارتن",
+    "george r.r martin ",
+    "GEORGE MARTIN",
+    "George R.R.Martin",
+    "George R.R. Martin’s",
+    "martin-george",
+    "Martin George R.R."
+  ],
+  "key": "/authors/OL234664A",
+  "links": [
+    {
+      "title": "Official Web Site",
+      "url": "http://www.georgerrmartin.com/",
+      "type": {
+        "key": "/type/link"
+      }
+    },
+    {
+      "title": "George R. R. Martin's Blog",
+      "url": "http://grrm.livejournal.com/",
+      "type": {
+        "key": "/type/link"
+      }
+    },
+    {
+      "title": "Westeros: The 'A Song of Ice and Fire' Domain",
+      "url": "https://www.westeros.org/",
+      "type": {
+        "key": "/type/link"
+      }
+    }
+  ],
+  "bio": "George Raymond Richard Martin (born September 20, 1948), sometimes referred to as GRRM, is an American author and screenwriter of fantasy, horror, and science fiction. He is best known for his ongoing *A Song of Ice and Fire* series of epic fantasy novels.\r\n\r\nCritics have described Martin's work as dark and cynical. His first novel, Dying of the Light, set the tone for most of his future work; it is set on a mostly abandoned planet that is slowly becoming uninhabitable as it moves away from its sun. This story, and many of Martin's others, have a strong sense of melancholy. His characters are often unhappy, or at least unsatisfied - trying to stay idealistic in a ruthless world. Many have elements of tragic heroes in them. Reviewer T. M. Wagner writes, \"Let it never be said Martin doesn't share Shakespeare's fondness for the senselessly tragic.\" This gloominess can be an obstacle for some readers. The Inchoatus Group writes, \"If this absence of joy is going to trouble you, or you’re looking for something more affirming, then you should probably seek elsewhere.\"\r\n\r\n([Source][1])\r\n\r\n\r\n  [1]: http://en.wikipedia.org/wiki/George_R._R._Martin",
+  "birth_date": "20 September 1948",
+  "type": {
+    "key": "/type/author"
+  },
+  "title": "Martin, George Raymond Richard",
+  "photos": [
+    6387401,
+    6155669
+  ],
+  "source_records": [
+    "ia:windhaven0000mart_o7z3",
+    "amazon:1984819453",
+    "amazon:2352942403",
+    "amazon:0007277482",
+    "amazon:2290329533",
+    "ia:lombradellaprofe0000mart",
+    "amazon:8804622784",
+    "amazon:6073159250",
+    "ia:furtunapewindhav0000mart",
+    "amazon:1531879969",
+    "amazon:1449485197",
+    "amazon:8129300176",
+    "amazon:6055069512",
+    "amazon:6073150474",
+    "amazon:0575118679",
+    "amazon:1449468705",
+    "amazon:9124105058",
+    "bwb:9781312562820",
+    "amazon:1613832788",
+    "amazon:8804688424",
+    "amazon:0575129514",
+    "promise:bwb_daily_pallets_2020-04-09",
+    "promise:bwb_daily_pallets_2022-03-17",
+    "promise:bwb_daily_pallets_2021-09-14",
+    "amazon:1455832987",
+    "amazon:6175381785",
+    "promise:bwb_daily_pallets_2022-08-13",
+    "amazon:9124095001",
+    "amazon:0007260237",
+    "amazon:8409333465",
+    "promise:bwb_daily_pallets_2020-10-07",
+    "promise:bwb_daily_pallets_2022-05-23:KQ-651-726",
+    "promise:bwb_daily_pallets_2023-05-15:KN-818-204",
+    "bwb:9781590191606",
+    "amazon:2376863120",
+    "amazon:9588886430",
+    "amazon:2917689544",
+    "ia:reyezhimengzhenz0000mart",
+    "ia:bingyuhuozhige4j0004madi",
+    "amazon:9776483925",
+    "ia:bwb_P9-CFJ-342",
+    "amazon:6073128843",
+    "ia:bwb_KU-426-196",
+    "amazon:0008312737",
+    "amazon:2290011487"
+  ],
+  "name": "George R. R. Martin",
+  "personal_name": "George R. R. Martin",
+  "remote_ids": {
+    "amazon": "B000APIGH4",
+    "isni": "0000000077784510",
+    "wikidata": "Q181677",
+    "librarything": "martingeorgerr",
+    "viaf": "98636170",
+    "goodreads": "346732",
+    "imdb": "nm0552333",
+    "bookbrainz": "8b0b4bfa-16c4-48f1-bd45-b416a3ca420b",
+    "musicbrainz": "b71fd9a0-6432-494c-9f01-14a716bdca2e",
+    "storygraph": "c7c8537b-bfec-49dc-9153-79296411b18a",
+    "lc_naf": "n80160390",
+    "opac_sbn": "CFIV109617"
+  },
+  "latest_revision": 40,
+  "revision": 40,
+  "created": {
+    "type": "/type/datetime",
+    "value": "2008-04-01T03:28:50.625462"
+  },
+  "last_modified": {
+    "type": "/type/datetime",
+    "value": "2025-10-09T09:18:46.612199"
+  }
+}

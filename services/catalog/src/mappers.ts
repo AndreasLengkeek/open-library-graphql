@@ -4,6 +4,9 @@ import { stripKey } from './ids.js';
 export type AuthorModel = {
   id: string;
   name: string;
+  bio?: string;
+  birthDate?: string;
+  books?: BookModel[];
 };
 
 export type BookModel = {
