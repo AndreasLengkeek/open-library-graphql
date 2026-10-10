@@ -1,4 +1,5 @@
 import type { GraphQLResolveInfo } from 'graphql';
+import type { BookModel, AuthorModel } from './mappers.js';
 import type { Context } from './context.js';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -163,10 +164,10 @@ export type FederationReferenceTypes = {
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Author: ResolverTypeWrapper<Author>;
+  Author: ResolverTypeWrapper<AuthorModel>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  Book: ResolverTypeWrapper<Book>;
+  Book: ResolverTypeWrapper<BookModel>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
@@ -174,10 +175,10 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Author: Author;
+  Author: AuthorModel;
   String: Scalars['String']['output'];
   ID: Scalars['ID']['output'];
-  Book: Book | FederationReferenceTypes['Book'];
+  Book: BookModel;
   Int: Scalars['Int']['output'];
   Query: Record<PropertyKey, never>;
   Boolean: Scalars['Boolean']['output'];

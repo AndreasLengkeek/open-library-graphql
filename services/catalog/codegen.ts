@@ -9,6 +9,10 @@ const config: CodegenConfig = {
         federation: true,
         useTypeImports: true,
         contextType: './context.js#Context',
+        mappers: {
+          Book: './mappers.js#BookModel',
+          Author: './mappers.js#AuthorModel',
+        },
       },
     },
   },
