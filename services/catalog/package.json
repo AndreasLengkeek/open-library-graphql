@@ -18,6 +18,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "fixtures:record": "tsx test/recordFixtures.ts"
   }
 }

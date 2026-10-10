@@ -1,5 +1,6 @@
 packages:
   - 'services/*'
+  - 'seed'
 allowBuilds:
   '@apollo/protobufjs': false
   '@parcel/watcher': false

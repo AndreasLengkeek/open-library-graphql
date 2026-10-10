@@ -4,6 +4,8 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "pnpm -r exec tsc --noEmit",
+    "seed": "pnpm --filter @olg/seed seed",
+    "fixtures:record": "pnpm --filter @olg/catalog fixtures:record",
     "compose": "APOLLO_ELV2_LICENSE=accept rover supergraph compose --config router/supergraph.yaml > router/supergraph.graphql",
     "codegen": "pnpm -r codegen",
     "codegen:check": "pnpm codegen && git diff --exit-code -- \"services/*/src/types.generated.ts\""

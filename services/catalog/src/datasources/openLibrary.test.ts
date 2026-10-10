@@ -62,6 +62,10 @@ describe('searchWorks', () => {
     expect(new URL(requests[0].url).searchParams.get('limit')).toBe(sent);
   });
 
+  it('fails a request no fixture was recorded for, instead of letting it reach the network', async () => {
+    await expect(createClient().searchWorks('no fixture for this', 5)).rejects.toThrow(/Open Library 501/);
+  });
+
   it('throws when Open Library responds with an error status', async () => {
     openLibraryServer.use(http.get(`${OPEN_LIBRARY_URL}/search.json`, () => new HttpResponse(null, { status: 503 })));
 
@@ -99,10 +103,6 @@ describe('getAuthor', () => {
   });
 
   it('throw 404 for an Author Open Library does not know', async () => {
-    openLibraryServer.use(
-      http.get(`${OPEN_LIBRARY_URL}/authors/:id.json`, () => new HttpResponse(null, { status: 404 })),
-    );
-
     await expect(createClient().getAuthor('OL00000A')).rejects.toThrow(/Open Library 404/);
   });
 });

@@ -18,8 +18,12 @@ export type AuthorRecord = {
   birth_date?: string;
 };
 
-const FIELDS = 'key,title,author_key,author_name,first_publish_year,cover_i,isbn,subject,description';
+export const FIELDS = 'key,title,author_key,author_name,first_publish_year,cover_i,isbn,subject,description';
 const MAX_LIMIT = 50;
+
+export const DEFAULT_BASE_URL = 'https://openlibrary.org';
+export const DEFAULT_USER_AGENT =
+  process.env.OPEN_LIBRARY_USER_AGENT ?? 'reading-tracker-dev (andreas.lengkeek@gmail.com)';
 
 type Options = {
   baseUrl?: string;
@@ -31,8 +35,8 @@ type Options = {
  * A thin client over the Open Library HTTP API. Each client counts its own requests.
  */
 export function createOpenLibraryClient({
-  baseUrl = 'https://openlibrary.org',
-  userAgent = process.env.OPEN_LIBRARY_USER_AGENT ?? 'reading-tracker-dev (andreas.lengkeek@gmail.com)',
+  baseUrl = DEFAULT_BASE_URL,
+  userAgent = DEFAULT_USER_AGENT,
   timeoutMs = 5000,
 }: Options = {}) {
   let requestCount = 0;
