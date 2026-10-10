@@ -195,13 +195,12 @@ These are the constraints your schema and resolvers must enforce. Definitions ar
 
 ## Completing a task
 
-1. **Branch:** `git switch -c task/<id>-<slug>` (for example `task/02.3-catalog-books`).
 2. **Tick the acceptance criteria** in the task file as you verify each one. Don't tick anything you haven't actually run.
 3. **Run the gate.** Every check that exists so far must pass:
    `pnpm typecheck && pnpm test`, plus `pnpm compose` (from 01.3) and `pnpm codegen:check` (from 02.2).
 4. **Review (optional):** run `/code-review` against `main` and point it at the task file as the spec.
 5. **Tick the task in [Milestones](#milestones)** below, in the same commit as the work.
-6. **Commit and merge:** use the message `<id>: <title>` (for example `02.3: catalog subgraph — search and Books`). From 06.3 onwards, open a PR so CI runs before you merge.
+6. **Commit and merge:** use the message `<id> <title>` (for example `02.3 catalog subgraph — search and Books`). From 06.3 onwards, open a PR from a new branch so CI runs before you merge.
 
 A milestone is complete when all its tasks are ticked and its headline outcome works from a clean checkout.
 

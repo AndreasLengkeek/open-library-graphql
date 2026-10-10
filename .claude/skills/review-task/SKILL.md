@@ -11,7 +11,7 @@ Runs step 5 of SPEC.md "Completing a task" (the review), then steps 2 and 6 (tic
 
 The argument is a task id (`00.1`, `S3`). Find `docs/tasks/<id>-*.md`; exactly one file must match, or stop and ask.
 
-Fixed point: `main` when you're on a `task/<id>-*` branch. On `main` itself, use the parent of the oldest commit whose message starts with `<id>:` or mentions the task; if none or ambiguous, ask.
+Fixed point: On `main` itself, use the parent of the oldest commit whose message starts with `<id>:` or mentions the task; if none or ambiguous, ask.
 
 ## 2. Review
 
