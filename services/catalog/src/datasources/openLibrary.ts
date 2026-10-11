@@ -56,7 +56,7 @@ type Options = {
 export function createOpenLibraryClient({
   baseUrl = DEFAULT_BASE_URL,
   userAgent = DEFAULT_USER_AGENT,
-  timeoutMs = 5000,
+  timeoutMs = 30000,
   counter,
 }: Options = {}) {
   let requestCount = 0;
